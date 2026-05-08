@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  shopcli:
+    build: .
+    container_name: shopcli_app
+    stdin_open: true          # keep STDIN open for interactive CLI
+    tty: true                 # allocate a pseudo-TTY
+    environment:
+      - DATABASE_URL=sqlite:////app/data/ecommerce.db
+      - SECRET_KEY=change-me-in-production-use-32-char-key
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=60
+      - DEBUG=false
+    volumes:
+      - shopcli_data:/app/data   # persist SQLite across restarts
+
+volumes:
+  shopcli_data:
+    driver: local
